@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>DriveCoreDZ</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+}
+
+/* HEADER */
+header{
+background:#0b1220;
+padding:25px;
+border-bottom:2px solid #38bdf8;
+}
+
+.logo{
+font-size:30px;
+font-weight:bold;
+color:#38bdf8;
+}
+
+.tagline{
+font-size:13px;
+color:#94a3b8;
+}
+
+/* SECTIONS */
+.section{
+background:#1e293b;
+width:90%;
+margin:12px auto;
+padding:15px;
+border-radius:10px;
+}
+
+/* INPUTS */
+select,input{
+width:90%;
+padding:10px;
+margin-top:8px;
+border:none;
+border-radius:6px;
+}
+
+/* BUTTON */
+button{
+width:90%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:6px;
+background:#22c55e;
+color:white;
+cursor:pointer;
+}
+
+/* RESULT */
+.result{
+background:#0b1220;
+width:90%;
+margin:10px auto;
+padding:10px;
+border-radius:8px;
+text-align:right;
+}
+
+/* SMALL CARD */
+.card{
+background:#0f172a;
+padding:10px;
+margin-top:8px;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+<div class="logo">⚡ DriveCoreDZ</div>
+<div class="tagline">Smart Car Scanner • AI Diagnosis • Auto Parts • Shops Network</div>
+</header>
+
+<!-- LANDING -->
+<div class="section">
+<h2>🚗 منصة تشخيص السيارات الذكية</h2>
+<p>Scanner + AI + محلات + قطع غيار + خريطة</p>
+</div>
+
+<!-- CAR SELECT -->
+<div class="section">
+<h3>🚗 السيارة</h3>
+
+<select id="brand" onchange="loadModels()">
+<option value="">اختر الشركة</option>
+<option>Renault</option>
+<option>Peugeot</option>
+<option>BMW</option>
+</select>
+
+<select id="model" onchange="loadYears()"></select>
+<select id="year"></select>
+</div>
+
+<!-- AI DIAG -->
+<div class="section">
+<h3>🧠 AI Diagnostic</h3>
+<input id="code" placeholder="P0335 / P0420">
+<button onclick="diagnose()">تشخيص ذكي</button>
+</div>
+
+<!-- PARTS -->
+<div class="section">
+<h3>🔧 البحث عن قطعة</h3>
+<input id="part" placeholder="ECU / alternateur / capteur">
+<button onclick="searchPart()">بحث</button>
+</div>
+
+<!-- SHOPS -->
+<div class="section">
+<h3>🏪 المحلات + GPS</h3>
+<button onclick="shops()">عرض المحلات</button>
+</div>
+
+<!-- RESULT -->
+<div class="result" id="result">النتائج تظهر هنا...</div>
+
+<script>
+
+/* ================= MODELS ================= */
+function loadModels(){
+
+let brand=document.getElementById("brand").value;
+let model=document.getElementById("model");
+
+model.innerHTML="";
+
+if(brand==="Renault"){
+model.innerHTML=`
+<option>Clio</option>
+<option>Megane</option>
+<option>Kangoo</option>
+`;
+}
+
+if(brand==="Peugeot"){
+model.innerHTML=`
+<option>208</option>
+<option>308</option>
+<option>Partner</option>
+`;
+}
+
+if(brand==="BMW"){
+model.innerHTML=`
+<option>Serie 1</option>
+<option>Serie 3</option>
+<option>X5</option>
+`;
+}
+}
+
+/* ================= YEARS ================= */
+function loadYears(){
+
+let model=document.getElementById("model").value;
+let year=document.getElementById("year");
+
+year.innerHTML="";
+
+let start=1990;
+
+if(model==="Clio") start=1990;
+if(model==="Megane") start=1995;
+if(model==="208") start=2012;
+if(model==="X5") start=2000;
+if(model==="Serie 3") start=1998;
+
+for(let i=2024;i>=start;i--){
+year.innerHTML+=`<option>${i}</option>`;
+}
+}
+
+/* ================= AI DIAG ================= */
+function diagnose(){
+
+let code=document.getElementById("code").value;
+
+let r="🧠 DriveCore AI Diagnostic<br><br>";
+
+if(code==="P0335"){
+r+=`
+⚠️ P0335<br>
+🧠 احتمال 1: حساس الكرنك (90%)<br>
+🧠 احتمال 2: أسلاك مقطوعة (60%)<br>
+🧠 احتمال 3: ECU (20%)<br><br>
+
+📊 الخطورة: عالية<br>
+🛠️ الحل: تغيير الحساس + فحص الكهرباء
+`;
+}
+
+else if(code==="P0420"){
+r+=`
+⚠️ P0420<br>
+🧠 كاتاليزور ضعيف (80%)<br>
+🧠 حساس O2 (70%)<br><br>
+
+📊 الخطورة: متوسطة<br>
+🛠️ الحل: فحص العادم + تغيير sensor
+`;
+}
+
+else{
+r+="⚠️ Code غير معروف - سيتم تحديث قاعدة البيانات";
+}
+
+document.getElementById("result").innerHTML=r;
+}
+
+/* ================= PARTS ================= */
+function searchPart(){
+
+let p=document.getElementById("part").value.toLowerCase();
+
+let r="🔧 نتائج القطع:<br><br>";
+
+if(p.includes("ecu")){
+r+=`
+🧠 ECU<br>
+💰 15000 - 40000 DA<br>
+📦 متوفر<br>
+🏪 Auto Electric Alger<br>
+📞 0550xxx
+`;
+}
+
+else if(p.includes("alternateur")){
+r+=`
+⚡ Alternateur<br>
+💰 8000 - 20000 DA<br>
+📦 متوفر<br>
+🏪 Electro Car DZ<br>
+📞 0661xxx
+`;
+}
+
+else{
+r+="🔍 قطعة: "+p+" (سيتم إضافتها)";
+}
+
+document.getElementById("result").innerHTML=r;
+}
+
+/* ================= SHOPS + MAP ================= */
+function shops(){
+
+document.getElementById("result").innerHTML=`
+
+🏪 Auto Electric Alger<br>
+📍 Alger - Bab Ezzouar<br>
+📞 0550xxx<br>
+🗺️ https://maps.google.com/?q=Alger+auto+electric<br><br>
+
+🏪 Electro Car Oran<br>
+📍 Oran Centre<br>
+📞 0661xxx<br>
+🗺️ https://maps.google.com/?q=Oran+car+electric<br><br>
+
+🏪 Diag Center DZ<br>
+📍 Algeria<br>
+📞 0770xxx<br>
+🧠 Diagnostic ECU Specialist
+`;
+}
+
+</script>
+
+</body>
+</html>
